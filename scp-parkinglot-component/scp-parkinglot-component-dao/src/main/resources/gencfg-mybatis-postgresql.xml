@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- 生成前需要将数据库驱动依赖包手动添加到classpath,maven导入的不行 -->
+	<classPathEntry
+		location="D://soft//postgresql-42.1.4.jar" />
+	<context id="context" targetRuntime="MyBatis3"
+		defaultModelType="conditional">
+		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+			<property name="searchString" value="Example$" />
+			<property name="replaceString" value="Criteria" />
+		</plugin>
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+		<jdbcConnection driverClass="org.postgresql.Driver"
+			connectionURL="jdbc:postgresql://192.168.0.209:5432/hdsc_db" userId="postgres"
+			password="hdpostgres123" />
+		<javaModelGenerator
+			targetPackage="com.eg.egsc.scp.parkinglotcomponent.mapper.entity"
+			targetProject="scp-parkinglot-component-dao/src/main/java" />
+		<sqlMapGenerator targetPackage="com.eg.egsc.scp.parkinglotcomponent.mapper"
+			targetProject="scp-parkinglot-component-dao/src/main/java" />
+		<javaClientGenerator targetPackage="com.eg.egsc.scp.parkinglotcomponent.mapper"
+			targetProject="scp-parkinglot-component-dao/src/main/java" type="XMLMAPPER" />
+
+		<table schema="plc" tableName="%" />
+		<!-- 根据数据库生成，已生成的不能重复生成 <table schema="park" tableName="%" /> -->
+
+		<!-- 根据表明生成，已生成的不能重复生成 <table tableName="park_access_cur" /> <table tableName="park_access_his" 
+			/> <table tableName="park_car" /> <table tableName="park_car_capture" /> 
+			<table tableName="park_carport" /> <table tableName="park_channel_rel" /> 
+			<table tableName="park_charge" /> <table tableName="park_consume_record" 
+			/> <table tableName="park_fee_rule" /> <table tableName="park_hand_record" 
+			/> <table tableName="park_led_carport_rel" /> <table tableName="park_package" 
+			/> <table tableName="park_package_car_rel" /> <table tableName="park_package_park_rel" 
+			/> <table tableName="park_park_channel" /> <table tableName="park_park_parking_lot" 
+			/> <table tableName="park_reservation" /> <table tableName="park_park_rule" 
+			/> <table tableName="park_parked_cur" /> <table tableName="park_parked_his" 
+			/> <table tableName="park_trade_record" /> -->
+	</context>
+</generatorConfiguration>

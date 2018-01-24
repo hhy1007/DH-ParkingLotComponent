@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.car.CarMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkCar">
+		<id column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="car_num" property="carNum" jdbcType="VARCHAR" />
+		<result column="car_code" property="carCode" jdbcType="VARCHAR" />
+		<result column="car_num_color" property="carNumColor" jdbcType="VARCHAR" />
+		<result column="car_type" property="carType" jdbcType="SMALLINT" />
+		<result column="valid_start_time" property="validStartTime"
+			jdbcType="TIMESTAMP" />
+		<result column="valid_end_time" property="validEndTime"
+			jdbcType="TIMESTAMP" />
+		<result column="car_mode" property="carMode" jdbcType="VARCHAR" />
+		<result column="car_brand" property="carBrand" jdbcType="VARCHAR" />
+		<result column="car_color" property="carColor" jdbcType="VARCHAR" />
+		<result column="car_pic" property="carPic" jdbcType="VARCHAR" />
+		<result column="owner_id" property="ownerId" jdbcType="VARCHAR" />
+		<result column="house_no" property="houseNo" jdbcType="VARCHAR" />
+		<result column="list_type" property="listType" jdbcType="SMALLINT" />
+		<result column="car_num_type" property="carNumType" jdbcType="SMALLINT" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="SMALLINT" />
+		<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		uuid, car_num, car_code, car_num_color, car_type,
+		valid_start_time, valid_end_time,
+		car_mode, car_brand, car_color, car_pic, owner_id, house_no, list_type,
+		car_num_type,
+		memo, delete_flag, court_uuid, create_time, update_time, create_user,
+		update_user
+	</sql>
+
+	<update id="deleteByIds" parameterType="Object">
+		update plc.park_car set
+		delete_flag = 1
+		where uuid in
+		<foreach collection="list" index="index" item="item" open="("
+			separator=" , " close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<update id="updateCar"
+		parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkCar">
+		update plc.park_car set
+		valid_start_time=#{validStartTime},
+		valid_end_time=#{validEndTime},list_type=#{listType},
+		car_type =
+		#{carType} where uuid = #{uuid}
+	</update>
+
+	<select id="countByExample" parameterType="Object" resultType="java.lang.Integer">
+		select count(*) from plc.park_car
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<select resultMap="BaseResultMap" parameterType="Object"
+		id="selectByExampleWithRowbounds">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_car
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="pageSize != null and pageOffset != null">
+			limit ${pageSize} offset ${pageOffset}
+		</if>
+
+	</select>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<if test="id != null">
+				and uuid = #{uuid}
+			</if>
+			<if test="carNum != null and carNum != ''">
+				and car_num = #{carNum}
+			</if>
+			<if test="carCode != null">
+				and car_Code = #{carCode}
+			</if>
+			<if test="carType != null">
+				and car_type = #{carType}
+			</if>
+			<if test="carMode != null">
+				and car_mode = #{carMode}
+			</if>
+			<if test="carBrand != null">
+				and car_brand = #{carBrand}
+			</if>
+			<if test="carColor != null">
+				and car_color = #{carColor}
+			</if>
+			<if test="ownerId != null">
+				and owner_id = #{ownerId}
+			</if>
+			<if test="houseNo != null">
+				and house_no = #{houseNo}
+			</if>
+			<if test="listType != null">
+				and list_type = #{listType}
+			</if>
+			<choose>
+				<when test="deleteFlag == null">and delete_flag = 0</when>
+				<when test="deleteFlag != null">and delete_flag = #{deleteFlag}</when>
+			</choose>
+		</where>
+	</sql>
+
+	<insert id="insertCarBatch" parameterType="java.util.List">
+		insert into plc.park_car (
+		<include refid="Base_Column_List" />
+		)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.uuid},#{item.carNum},#{item.carCode},#{item.carNumColor},
+			#{item.carType},#{item.validStartTime},#{item.validEndTime},
+			#{item.carMode},#{item.carBrand},#{item.carColor},#{item.carPic},
+			#{item.ownerId},#{item.houseNo},#{item.listType},#{item.carNumType},
+			#{item.memo},#{item.deleteFlag},#{item.courtUuid},#{item.createTime},
+			#{item.updateTime},#{item.createUser},#{item.updateUser})
+		</foreach>
+	</insert>
+
+	<select resultMap="BaseResultMap" parameterType="Object"
+		id="selectCarByCarNums">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_car where delete_flag = 0 and car_num in
+		<foreach collection="list" index="index" item="item" open="("
+			separator=" , " close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

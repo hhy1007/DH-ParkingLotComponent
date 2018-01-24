@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eg.egsc.scp.parkinglotcomponent.mapper.ParkPackageParkRelMapper" >
+  <resultMap id="BaseResultMap" type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageParkRel" >
+    <result column="package_id" property="packageId" jdbcType="VARCHAR" />
+    <result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    package_id, park_code
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageParkRelCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_package_park_rel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageParkRelCriteria" >
+    delete from plc.park_package_park_rel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageParkRel" >
+    insert into plc.park_package_park_rel (package_id, park_code)
+    values (#{packageId,jdbcType=VARCHAR}, #{parkCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageParkRel" >
+    insert into plc.park_package_park_rel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="packageId != null" >
+        package_id,
+      </if>
+      <if test="parkCode != null" >
+        park_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="packageId != null" >
+        #{packageId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkCode != null" >
+        #{parkCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageParkRelCriteria" resultType="java.lang.Integer" >
+    select count(*) from plc.park_package_park_rel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update plc.park_package_park_rel
+    <set >
+      <if test="record.packageId != null" >
+        package_id = #{record.packageId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkCode != null" >
+        park_code = #{record.parkCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update plc.park_package_park_rel
+    set package_id = #{record.packageId,jdbcType=VARCHAR},
+      park_code = #{record.parkCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageParkRelCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_package_park_rel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

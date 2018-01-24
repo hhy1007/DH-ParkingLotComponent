@@ -1,0 +1,16 @@
+com/eg/egsc/scp/parkinglotcomponent/client/rule/FeeRuleClient.class
+com/eg/egsc/scp/parkinglotcomponent/client/access/impl/AccessCurClientImpl.class
+com/eg/egsc/scp/parkinglotcomponent/client/charge/ChargeClient.class
+com/eg/egsc/scp/parkinglotcomponent/client/charge/impl/ChargeClientImpl.class
+com/eg/egsc/scp/parkinglotcomponent/dto/rule/FreeTimeDto.class
+com/eg/egsc/scp/parkinglotcomponent/dto/rule/PeakPeriodDto.class
+com/eg/egsc/scp/parkinglotcomponent/dto/rule/FeeRuleDto.class
+com/eg/egsc/scp/parkinglotcomponent/dto/access/AccessCurDto.class
+com/eg/egsc/scp/parkinglotcomponent/dto/rule/ChargeInfoDto.class
+com/eg/egsc/scp/parkinglotcomponent/dto/rule/NonPeakPeriodDto.class
+com/eg/egsc/scp/parkinglotcomponent/dto/rule/RequestFeeRuleDto.class
+com/eg/egsc/scp/parkinglotcomponent/client/access/AccessCurClient.class
+com/eg/egsc/scp/parkinglotcomponent/dto/rule/ChargeDetailDto.class
+com/eg/egsc/scp/parkinglotcomponent/dto/car/CarDto.class
+com/eg/egsc/scp/parkinglotcomponent/dto/charge/ChargeOnlineDto.class
+com/eg/egsc/scp/parkinglotcomponent/client/rule/impl/FeeRuleClientImpl.class

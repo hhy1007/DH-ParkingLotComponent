@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.carport.CarportMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkCarport">
+		<id column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="carport_code" property="carportCode" jdbcType="VARCHAR" />
+		<result column="carport_shape" property="carportShape"
+			jdbcType="VARCHAR" />
+		<result column="carport_allocation" property="carportAllocation"
+			jdbcType="SMALLINT" />
+		<result column="detector_code" property="detectorCode"
+			jdbcType="VARCHAR" />
+		<result column="monitor_code" property="monitorCode" jdbcType="VARCHAR" />
+		<result column="lock_code" property="lockCode" jdbcType="VARCHAR" />
+		<result column="map_id" property="mapId" jdbcType="VARCHAR" />
+		<result column="suit_car_model" property="suitCarModel"
+			jdbcType="SMALLINT" />
+		<result column="property_right" property="propertyRight"
+			jdbcType="SMALLINT" />
+		<result column="carport_center_x" property="carportCenterX"
+			jdbcType="NUMERIC" />
+		<result column="carport_center_y" property="carportCenterY"
+			jdbcType="NUMERIC" />
+		<result column="carport_center_z" property="carportCenterZ"
+			jdbcType="NUMERIC" />
+		<result column="carport_type" property="carportType" jdbcType="SMALLINT" />
+		<result column="area_total" property="areaTotal" jdbcType="SMALLINT" />
+		<result column="area_idle" property="areaIdle" jdbcType="SMALLINT" />
+		<result column="park_id" property="parkId" jdbcType="VARCHAR" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="SMALLINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		t.uuid, t.carport_code, carport_shape, carport_allocation,
+		detector_code, t.court_uuid,
+		monitor_code, t.delete_flag,
+		lock_code,
+		map_id,
+		suit_car_model,
+		property_right, carport_center_x,
+		carport_center_y,
+		carport_center_z,
+		t.carport_type, area_total,
+		area_idle, park_id,
+		t.memo,
+		t.create_time,
+		t.update_time, t.create_user,
+		t.update_user
+	</sql>
+
+	<sql id="Column_List">
+	    t.uuid, carport_code, carport_shape, carport_allocation,
+		detector_code, t.court_uuid,
+		monitor_code, t.delete_flag,
+		lock_code,
+		map_id, suit_car_model,
+		property_right, carport_center_x,
+		carport_center_y,
+		carport_center_z,
+		carport_type, area_total, area_idle,
+		park_id, memo, delete_flag,
+		create_time, update_time, create_user,
+		update_user
+	</sql>
+
+	<select id="selectByParkId" resultMap="BaseResultMap"
+		parameterType="com.eg.egsc.scp.parkinglotcomponent.basic.page.PageRequest">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_carport t LEFT OUTER JOIN plc.park_auth_package p on
+		t.carport_code = p.carport_code
+		<where>
+			<if test="filters.parkIds!=null and filters.parkIds.size()>0">
+				and
+				<foreach collection="filters.parkIds" index="index" item="item"
+					open="(" separator=" or " close=")">
+					t.park_id=#{item}
+				</foreach>
+			</if>
+			<if test="filters.carportCode!=null">
+				and t.carport_code like #{filters.carportCode}
+			</if>
+			and p.carport_code is null
+		</where>
+		and t.delete_flag = 0
+		order by t.create_time desc
+		limit #{pageSize}
+		offset
+		#{filters.pageOffset}
+	</select>
+
+	<select id="selectCountByParkId" resultType="int"
+		parameterType="com.eg.egsc.scp.parkinglotcomponent.basic.page.PageRequest">
+		select count(1)
+		from plc.park_carport t LEFT OUTER JOIN
+		plc.park_auth_package p on
+		t.carport_code = p.carport_code
+		<where>
+			<if test="filters.carportCode!=null">
+				and t.carport_code like #{filters.carportCode}
+			</if>
+			<if test="filters.parkIds!=null and filters.parkIds.size()>0">
+				and
+				<foreach collection="filters.parkIds" index="index" item="item"
+					open="(" separator=" or " close=")">
+					t.park_id=#{item}
+				</foreach>
+			</if>
+			and t.delete_flag = 0
+			and p.carport_code is null
+		</where>
+	</select>
+
+	<insert id="insertBatchCarport" parameterType="Object">
+		insert into plc.park_carport (uuid, carport_code, carport_shape,
+		carport_allocation, detector_code, monitor_code,
+		lock_code, map_id,
+		suit_car_model,
+		property_right, carport_center_x, carport_center_y,
+		carport_center_z, carport_type, area_total,
+		area_idle, park_id, memo,
+		create_time, update_time, create_user,
+		update_user, delete_flag,
+		court_uuid)
+		values
+		<foreach collection="list" item="parkCarport" index="index"
+			separator=",">
+			(
+			#{parkCarport.uuid}, #{parkCarport.carportCode},
+			#{parkCarport.carportShape}, #{parkCarport.carportAllocation},
+			#{parkCarport.detectorCode}, #{parkCarport.monitorCode},
+			#{parkCarport.lockCode}, #{parkCarport.mapId},
+			#{parkCarport.suitCarModel}, #{parkCarport.propertyRight},
+			#{parkCarport.carportCenterX}, #{parkCarport.carportCenterY},
+			#{parkCarport.carportCenterZ}, #{parkCarport.carportType},
+			#{parkCarport.areaTotal}, #{parkCarport.areaIdle},
+			#{parkCarport.parkId}, #{parkCarport.memo},
+			#{parkCarport.createTime}, #{parkCarport.updateTime},
+			#{parkCarport.createUser},#{parkCarport.updateUser},
+			#{parkCarport.deleteFlag},#{parkCarport.courtUuid}
+			)
+		</foreach>
+	</insert>
+
+	<update id="updateByCode"
+		parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkCarport">
+		update plc.park_carport
+		set map_id =
+		#{mapId},carport_center_x =
+		#{carportCenterX},carport_center_y =
+		#{carportCenterY}
+		where
+		carport_code = #{carportCode}
+	</update>
+</mapper>

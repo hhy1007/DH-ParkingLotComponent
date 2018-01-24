@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.rule.RuleMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkRule">
+		<id column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="rule_name" property="ruleName" jdbcType="VARCHAR" />
+		<result column="carport_type" property="carportType" jdbcType="SMALLINT" />
+		<result column="detail" property="detail" jdbcType="VARCHAR" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="SMALLINT" />
+		<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		uuid, rule_name, carport_type, detail, delete_flag, court_uuid
+	</sql>
+	<select id="selectByRuleIds" resultMap="BaseResultMap"
+		parameterType="java.lang.Object">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_rule
+		<where>
+			 delete_flag = 0 
+			<if test="list!=null and list.size()>0">
+				and
+				<foreach collection="list" index="index" item="item" open="("
+					separator=" or " close=")">
+					uuid=#{item}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+</mapper>

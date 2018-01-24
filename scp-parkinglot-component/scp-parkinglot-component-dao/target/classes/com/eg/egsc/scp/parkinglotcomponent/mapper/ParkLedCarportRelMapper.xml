@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eg.egsc.scp.parkinglotcomponent.mapper.ParkLedCarportRelMapper" >
+  <resultMap id="BaseResultMap" type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkLedCarportRel" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="led_code" property="ledCode" jdbcType="VARCHAR" />
+    <result column="carport_id" property="carportId" jdbcType="VARCHAR" />
+    <result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, led_code, carport_id, court_uuid, create_time, update_time, create_user, update_user
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkLedCarportRelCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_led_carport_rel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from plc.park_led_carport_rel
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from plc.park_led_carport_rel
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkLedCarportRelCriteria" >
+    delete from plc.park_led_carport_rel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkLedCarportRel" >
+    insert into plc.park_led_carport_rel (uuid, led_code, carport_id, 
+      court_uuid, create_time, update_time, 
+      create_user, update_user)
+    values (#{uuid,jdbcType=VARCHAR}, #{ledCode,jdbcType=VARCHAR}, #{carportId,jdbcType=VARCHAR}, 
+      #{courtUuid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkLedCarportRel" >
+    insert into plc.park_led_carport_rel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="ledCode != null" >
+        led_code,
+      </if>
+      <if test="carportId != null" >
+        carport_id,
+      </if>
+      <if test="courtUuid != null" >
+        court_uuid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="ledCode != null" >
+        #{ledCode,jdbcType=VARCHAR},
+      </if>
+      <if test="carportId != null" >
+        #{carportId,jdbcType=VARCHAR},
+      </if>
+      <if test="courtUuid != null" >
+        #{courtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkLedCarportRelCriteria" resultType="java.lang.Integer" >
+    select count(*) from plc.park_led_carport_rel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update plc.park_led_carport_rel
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ledCode != null" >
+        led_code = #{record.ledCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carportId != null" >
+        carport_id = #{record.carportId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courtUuid != null" >
+        court_uuid = #{record.courtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUser != null" >
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update plc.park_led_carport_rel
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      led_code = #{record.ledCode,jdbcType=VARCHAR},
+      carport_id = #{record.carportId,jdbcType=VARCHAR},
+      court_uuid = #{record.courtUuid,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      update_user = #{record.updateUser,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkLedCarportRel" >
+    update plc.park_led_carport_rel
+    <set >
+      <if test="ledCode != null" >
+        led_code = #{ledCode,jdbcType=VARCHAR},
+      </if>
+      <if test="carportId != null" >
+        carport_id = #{carportId,jdbcType=VARCHAR},
+      </if>
+      <if test="courtUuid != null" >
+        court_uuid = #{courtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkLedCarportRel" >
+    update plc.park_led_carport_rel
+    set led_code = #{ledCode,jdbcType=VARCHAR},
+      carport_id = #{carportId,jdbcType=VARCHAR},
+      court_uuid = #{courtUuid,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkLedCarportRelCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_led_carport_rel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

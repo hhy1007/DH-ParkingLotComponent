@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.alarm.AlarmArrearMapper">
+
+	<select id="selectAlarmArrear" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT
+			pap.carport_code,
+			pap.carport_type,
+			pap.valid_end_time,
+			psc.config_par1,
+			psc.config_par2
+		FROM
+			plc.park_auth_package pap,
+			plc.park_sys_config psc
+		WHERE
+			psc.config_type = '1'
+		AND pap.carport_type IN (1, 2)
+		AND pap.delete_flag = 0
+		<if test="carportCode != null">
+			and pap.carport_code = #{carportCode}
+		</if>
+	</select>
+
+</mapper>

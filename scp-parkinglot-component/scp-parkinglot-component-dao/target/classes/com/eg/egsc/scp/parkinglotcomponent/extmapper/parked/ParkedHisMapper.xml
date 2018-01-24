@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.parked.ParkedHisMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkParkedHis">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+		<result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+		<result column="map_id" property="mapId" jdbcType="VARCHAR" />
+		<result column="carport_code" property="carportCode" jdbcType="VARCHAR" />
+		<result column="car_num" property="carNum" jdbcType="VARCHAR" />
+		<result column="car_num_color" property="carNumColor" jdbcType="VARCHAR" />
+		<result column="car_color" property="carColor" jdbcType="VARCHAR" />
+		<result column="car_mark" property="carMark" jdbcType="VARCHAR" />
+		<result column="owner_id" property="ownerId" jdbcType="VARCHAR" />
+		<result column="park_start" property="parkStart" jdbcType="TIMESTAMP" />
+		<result column="park_date" property="parkDate" jdbcType="TIMESTAMP" />
+		<result column="alarm_status" property="alarmStatus" jdbcType="SMALLINT" />
+		<result column="park_type" property="parkType" jdbcType="SMALLINT" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		uuid,device_code, device_name, map_id, carport_code, car_num, car_num_color, car_color,
+		car_mark, owner_id, park_start, park_date, alarm_status, park_type,
+		img_url
+	</sql>
+	<select id="queryByCondition" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_parked_his
+		<if test="carportCode!=null">
+			WHERE carport_code like CONCAT('%',#{carportCode,jdbcType=VARCHAR},'%')
+		</if>
+		limit #{pageSize,jdbcType=INTEGER} offset #{pageNum,jdbcType=INTEGER}
+	</select>
+	<select id="selectByCarportCode" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_parked_his
+		<if test="carportCode!=null">
+			WHERE carport_code = #{carportCode,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="selectByCarNum" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_parked_his
+		<if test="carNum!=null">
+			WHERE car_num = #{carNum,jdbcType=VARCHAR}
+		</if>
+	</select>
+</mapper>

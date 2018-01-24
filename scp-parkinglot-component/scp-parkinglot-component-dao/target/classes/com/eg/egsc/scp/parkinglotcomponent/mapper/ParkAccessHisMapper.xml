@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eg.egsc.scp.parkinglotcomponent.mapper.ParkAccessHisMapper" >
+  <resultMap id="BaseResultMap" type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkAccessHis" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="car_num" property="carNum" jdbcType="VARCHAR" />
+    <result column="owner_id" property="ownerId" jdbcType="VARCHAR" />
+    <result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+    <result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+    <result column="carport_type" property="carportType" jdbcType="SMALLINT" />
+    <result column="package_id" property="packageId" jdbcType="VARCHAR" />
+    <result column="car_mode" property="carMode" jdbcType="VARCHAR" />
+    <result column="in_channel_id" property="inChannelId" jdbcType="VARCHAR" />
+    <result column="in_camera_code" property="inCameraCode" jdbcType="VARCHAR" />
+    <result column="in_sluice_code" property="inSluiceCode" jdbcType="VARCHAR" />
+    <result column="in_img_url" property="inImgUrl" jdbcType="VARCHAR" />
+    <result column="in_memo" property="inMemo" jdbcType="VARCHAR" />
+    <result column="out_car_num" property="outCarNum" jdbcType="VARCHAR" />
+    <result column="out_channel_id" property="outChannelId" jdbcType="VARCHAR" />
+    <result column="out_camera_code" property="outCameraCode" jdbcType="VARCHAR" />
+    <result column="out_sluice_code" property="outSluiceCode" jdbcType="VARCHAR" />
+    <result column="out_img_url" property="outImgUrl" jdbcType="VARCHAR" />
+    <result column="out_memo" property="outMemo" jdbcType="VARCHAR" />
+    <result column="enter_mode" property="enterMode" jdbcType="SMALLINT" />
+    <result column="payed_money" property="payedMoney" jdbcType="INTEGER" />
+    <result column="last_payed_time" property="lastPayedTime" jdbcType="TIMESTAMP" />
+    <result column="car_type" property="carType" jdbcType="SMALLINT" />
+    <result column="car_status" property="carStatus" jdbcType="SMALLINT" />
+    <result column="force_operator" property="forceOperator" jdbcType="VARCHAR" />
+    <result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, car_num, owner_id, park_code, card_number, carport_type, package_id, car_mode, 
+    in_channel_id, in_camera_code, in_sluice_code, in_img_url, in_memo, out_car_num, 
+    out_channel_id, out_camera_code, out_sluice_code, out_img_url, out_memo, enter_mode, 
+    payed_money, last_payed_time, car_type, car_status, force_operator, court_uuid, create_time, 
+    update_time, create_user, update_user
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkAccessHisCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_access_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from plc.park_access_his
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from plc.park_access_his
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkAccessHisCriteria" >
+    delete from plc.park_access_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkAccessHis" >
+    insert into plc.park_access_his (uuid, car_num, owner_id, 
+      park_code, card_number, carport_type, 
+      package_id, car_mode, in_channel_id, 
+      in_camera_code, in_sluice_code, in_img_url, 
+      in_memo, out_car_num, out_channel_id, 
+      out_camera_code, out_sluice_code, out_img_url, 
+      out_memo, enter_mode, payed_money, 
+      last_payed_time, car_type, car_status, 
+      force_operator, court_uuid, create_time, 
+      update_time, create_user, update_user
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{carNum,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR}, 
+      #{parkCode,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR}, #{carportType,jdbcType=SMALLINT}, 
+      #{packageId,jdbcType=VARCHAR}, #{carMode,jdbcType=VARCHAR}, #{inChannelId,jdbcType=VARCHAR}, 
+      #{inCameraCode,jdbcType=VARCHAR}, #{inSluiceCode,jdbcType=VARCHAR}, #{inImgUrl,jdbcType=VARCHAR}, 
+      #{inMemo,jdbcType=VARCHAR}, #{outCarNum,jdbcType=VARCHAR}, #{outChannelId,jdbcType=VARCHAR}, 
+      #{outCameraCode,jdbcType=VARCHAR}, #{outSluiceCode,jdbcType=VARCHAR}, #{outImgUrl,jdbcType=VARCHAR}, 
+      #{outMemo,jdbcType=VARCHAR}, #{enterMode,jdbcType=SMALLINT}, #{payedMoney,jdbcType=INTEGER}, 
+      #{lastPayedTime,jdbcType=TIMESTAMP}, #{carType,jdbcType=SMALLINT}, #{carStatus,jdbcType=SMALLINT}, 
+      #{forceOperator,jdbcType=VARCHAR}, #{courtUuid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkAccessHis" >
+    insert into plc.park_access_his
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="carNum != null" >
+        car_num,
+      </if>
+      <if test="ownerId != null" >
+        owner_id,
+      </if>
+      <if test="parkCode != null" >
+        park_code,
+      </if>
+      <if test="cardNumber != null" >
+        card_number,
+      </if>
+      <if test="carportType != null" >
+        carport_type,
+      </if>
+      <if test="packageId != null" >
+        package_id,
+      </if>
+      <if test="carMode != null" >
+        car_mode,
+      </if>
+      <if test="inChannelId != null" >
+        in_channel_id,
+      </if>
+      <if test="inCameraCode != null" >
+        in_camera_code,
+      </if>
+      <if test="inSluiceCode != null" >
+        in_sluice_code,
+      </if>
+      <if test="inImgUrl != null" >
+        in_img_url,
+      </if>
+      <if test="inMemo != null" >
+        in_memo,
+      </if>
+      <if test="outCarNum != null" >
+        out_car_num,
+      </if>
+      <if test="outChannelId != null" >
+        out_channel_id,
+      </if>
+      <if test="outCameraCode != null" >
+        out_camera_code,
+      </if>
+      <if test="outSluiceCode != null" >
+        out_sluice_code,
+      </if>
+      <if test="outImgUrl != null" >
+        out_img_url,
+      </if>
+      <if test="outMemo != null" >
+        out_memo,
+      </if>
+      <if test="enterMode != null" >
+        enter_mode,
+      </if>
+      <if test="payedMoney != null" >
+        payed_money,
+      </if>
+      <if test="lastPayedTime != null" >
+        last_payed_time,
+      </if>
+      <if test="carType != null" >
+        car_type,
+      </if>
+      <if test="carStatus != null" >
+        car_status,
+      </if>
+      <if test="forceOperator != null" >
+        force_operator,
+      </if>
+      <if test="courtUuid != null" >
+        court_uuid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="carNum != null" >
+        #{carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkCode != null" >
+        #{parkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNumber != null" >
+        #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="carportType != null" >
+        #{carportType,jdbcType=SMALLINT},
+      </if>
+      <if test="packageId != null" >
+        #{packageId,jdbcType=VARCHAR},
+      </if>
+      <if test="carMode != null" >
+        #{carMode,jdbcType=VARCHAR},
+      </if>
+      <if test="inChannelId != null" >
+        #{inChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="inCameraCode != null" >
+        #{inCameraCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inSluiceCode != null" >
+        #{inSluiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inImgUrl != null" >
+        #{inImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="inMemo != null" >
+        #{inMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="outCarNum != null" >
+        #{outCarNum,jdbcType=VARCHAR},
+      </if>
+      <if test="outChannelId != null" >
+        #{outChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="outCameraCode != null" >
+        #{outCameraCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outSluiceCode != null" >
+        #{outSluiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outImgUrl != null" >
+        #{outImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="outMemo != null" >
+        #{outMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterMode != null" >
+        #{enterMode,jdbcType=SMALLINT},
+      </if>
+      <if test="payedMoney != null" >
+        #{payedMoney,jdbcType=INTEGER},
+      </if>
+      <if test="lastPayedTime != null" >
+        #{lastPayedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carType != null" >
+        #{carType,jdbcType=SMALLINT},
+      </if>
+      <if test="carStatus != null" >
+        #{carStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="forceOperator != null" >
+        #{forceOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="courtUuid != null" >
+        #{courtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkAccessHisCriteria" resultType="java.lang.Integer" >
+    select count(*) from plc.park_access_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update plc.park_access_his
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNum != null" >
+        car_num = #{record.carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownerId != null" >
+        owner_id = #{record.ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkCode != null" >
+        park_code = #{record.parkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardNumber != null" >
+        card_number = #{record.cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carportType != null" >
+        carport_type = #{record.carportType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.packageId != null" >
+        package_id = #{record.packageId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carMode != null" >
+        car_mode = #{record.carMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inChannelId != null" >
+        in_channel_id = #{record.inChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inCameraCode != null" >
+        in_camera_code = #{record.inCameraCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inSluiceCode != null" >
+        in_sluice_code = #{record.inSluiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inImgUrl != null" >
+        in_img_url = #{record.inImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inMemo != null" >
+        in_memo = #{record.inMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outCarNum != null" >
+        out_car_num = #{record.outCarNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outChannelId != null" >
+        out_channel_id = #{record.outChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outCameraCode != null" >
+        out_camera_code = #{record.outCameraCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outSluiceCode != null" >
+        out_sluice_code = #{record.outSluiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outImgUrl != null" >
+        out_img_url = #{record.outImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outMemo != null" >
+        out_memo = #{record.outMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterMode != null" >
+        enter_mode = #{record.enterMode,jdbcType=SMALLINT},
+      </if>
+      <if test="record.payedMoney != null" >
+        payed_money = #{record.payedMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastPayedTime != null" >
+        last_payed_time = #{record.lastPayedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.carType != null" >
+        car_type = #{record.carType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.carStatus != null" >
+        car_status = #{record.carStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.forceOperator != null" >
+        force_operator = #{record.forceOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courtUuid != null" >
+        court_uuid = #{record.courtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUser != null" >
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update plc.park_access_his
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      car_num = #{record.carNum,jdbcType=VARCHAR},
+      owner_id = #{record.ownerId,jdbcType=VARCHAR},
+      park_code = #{record.parkCode,jdbcType=VARCHAR},
+      card_number = #{record.cardNumber,jdbcType=VARCHAR},
+      carport_type = #{record.carportType,jdbcType=SMALLINT},
+      package_id = #{record.packageId,jdbcType=VARCHAR},
+      car_mode = #{record.carMode,jdbcType=VARCHAR},
+      in_channel_id = #{record.inChannelId,jdbcType=VARCHAR},
+      in_camera_code = #{record.inCameraCode,jdbcType=VARCHAR},
+      in_sluice_code = #{record.inSluiceCode,jdbcType=VARCHAR},
+      in_img_url = #{record.inImgUrl,jdbcType=VARCHAR},
+      in_memo = #{record.inMemo,jdbcType=VARCHAR},
+      out_car_num = #{record.outCarNum,jdbcType=VARCHAR},
+      out_channel_id = #{record.outChannelId,jdbcType=VARCHAR},
+      out_camera_code = #{record.outCameraCode,jdbcType=VARCHAR},
+      out_sluice_code = #{record.outSluiceCode,jdbcType=VARCHAR},
+      out_img_url = #{record.outImgUrl,jdbcType=VARCHAR},
+      out_memo = #{record.outMemo,jdbcType=VARCHAR},
+      enter_mode = #{record.enterMode,jdbcType=SMALLINT},
+      payed_money = #{record.payedMoney,jdbcType=INTEGER},
+      last_payed_time = #{record.lastPayedTime,jdbcType=TIMESTAMP},
+      car_type = #{record.carType,jdbcType=SMALLINT},
+      car_status = #{record.carStatus,jdbcType=SMALLINT},
+      force_operator = #{record.forceOperator,jdbcType=VARCHAR},
+      court_uuid = #{record.courtUuid,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      update_user = #{record.updateUser,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkAccessHis" >
+    update plc.park_access_his
+    <set >
+      <if test="carNum != null" >
+        car_num = #{carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkCode != null" >
+        park_code = #{parkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNumber != null" >
+        card_number = #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="carportType != null" >
+        carport_type = #{carportType,jdbcType=SMALLINT},
+      </if>
+      <if test="packageId != null" >
+        package_id = #{packageId,jdbcType=VARCHAR},
+      </if>
+      <if test="carMode != null" >
+        car_mode = #{carMode,jdbcType=VARCHAR},
+      </if>
+      <if test="inChannelId != null" >
+        in_channel_id = #{inChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="inCameraCode != null" >
+        in_camera_code = #{inCameraCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inSluiceCode != null" >
+        in_sluice_code = #{inSluiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inImgUrl != null" >
+        in_img_url = #{inImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="inMemo != null" >
+        in_memo = #{inMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="outCarNum != null" >
+        out_car_num = #{outCarNum,jdbcType=VARCHAR},
+      </if>
+      <if test="outChannelId != null" >
+        out_channel_id = #{outChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="outCameraCode != null" >
+        out_camera_code = #{outCameraCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outSluiceCode != null" >
+        out_sluice_code = #{outSluiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outImgUrl != null" >
+        out_img_url = #{outImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="outMemo != null" >
+        out_memo = #{outMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterMode != null" >
+        enter_mode = #{enterMode,jdbcType=SMALLINT},
+      </if>
+      <if test="payedMoney != null" >
+        payed_money = #{payedMoney,jdbcType=INTEGER},
+      </if>
+      <if test="lastPayedTime != null" >
+        last_payed_time = #{lastPayedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carType != null" >
+        car_type = #{carType,jdbcType=SMALLINT},
+      </if>
+      <if test="carStatus != null" >
+        car_status = #{carStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="forceOperator != null" >
+        force_operator = #{forceOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="courtUuid != null" >
+        court_uuid = #{courtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkAccessHis" >
+    update plc.park_access_his
+    set car_num = #{carNum,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=VARCHAR},
+      park_code = #{parkCode,jdbcType=VARCHAR},
+      card_number = #{cardNumber,jdbcType=VARCHAR},
+      carport_type = #{carportType,jdbcType=SMALLINT},
+      package_id = #{packageId,jdbcType=VARCHAR},
+      car_mode = #{carMode,jdbcType=VARCHAR},
+      in_channel_id = #{inChannelId,jdbcType=VARCHAR},
+      in_camera_code = #{inCameraCode,jdbcType=VARCHAR},
+      in_sluice_code = #{inSluiceCode,jdbcType=VARCHAR},
+      in_img_url = #{inImgUrl,jdbcType=VARCHAR},
+      in_memo = #{inMemo,jdbcType=VARCHAR},
+      out_car_num = #{outCarNum,jdbcType=VARCHAR},
+      out_channel_id = #{outChannelId,jdbcType=VARCHAR},
+      out_camera_code = #{outCameraCode,jdbcType=VARCHAR},
+      out_sluice_code = #{outSluiceCode,jdbcType=VARCHAR},
+      out_img_url = #{outImgUrl,jdbcType=VARCHAR},
+      out_memo = #{outMemo,jdbcType=VARCHAR},
+      enter_mode = #{enterMode,jdbcType=SMALLINT},
+      payed_money = #{payedMoney,jdbcType=INTEGER},
+      last_payed_time = #{lastPayedTime,jdbcType=TIMESTAMP},
+      car_type = #{carType,jdbcType=SMALLINT},
+      car_status = #{carStatus,jdbcType=SMALLINT},
+      force_operator = #{forceOperator,jdbcType=VARCHAR},
+      court_uuid = #{courtUuid,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkAccessHisCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_access_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

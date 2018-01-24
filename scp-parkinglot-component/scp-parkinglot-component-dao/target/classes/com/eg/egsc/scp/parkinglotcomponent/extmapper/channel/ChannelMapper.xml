@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.channel.ChannelMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.extmapper.channel.entity.Channel">
+		<id column="uuid" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="SMALLINT" />
+		<result column="direct" property="direct" jdbcType="SMALLINT" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="SMALLINT" />
+		<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<association property="parkParkingLot"
+			javaType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkParkingLot">
+			<result column="park_name" property="parkName" jdbcType="VARCHAR" />
+			<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+			<result column="total" property="total" jdbcType="INTEGER" />
+			<result column="idle" property="idle" jdbcType="INTEGER" />
+			<result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+			<result column="fee_rule_id" property="feeRuleId" jdbcType="VARCHAR" />
+			<result column="park_rule_id" property="parkRuleId" jdbcType="VARCHAR" />
+			<result column="config_info" property="configInfo" jdbcType="VARCHAR" />
+			<result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+			<result column="address" property="address" jdbcType="VARCHAR" />
+			<result column="longitude" property="longitude" jdbcType="NUMERIC" />
+			<result column="latitude" property="latitude" jdbcType="NUMERIC" />
+			<result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+			<result column="memo" property="memo" jdbcType="VARCHAR" />
+			<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+			<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+			<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+			<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="delete_flag" property="deleteFlag" jdbcType="SMALLINT" />
+			<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+		</association>
+	</resultMap>
+
+	<resultMap id="ChannelRelResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.extmapper.channel.entity.ChannelRel">
+		<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+		<collection property="parkChannelRelList"
+			javaType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkChannelRel">
+			<id column="uuid" property="id" jdbcType="VARCHAR" />
+			<result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+			<result column="dev_code" property="devCode" jdbcType="VARCHAR" />
+			<result column="dev_type" property="devType" jdbcType="SMALLINT" />
+			<result column="control_type" property="controlType" jdbcType="SMALLINT" />
+			<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+			<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+			<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+			<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+
+	<sql id="Base_Column_ParkingLot_Channel_List">
+		c.uuid, c.name, c.park_code, c.type, direct, c.ip,
+		p.park_name, p.park_code, 
+		p.total, p.idle, p.parent_code,
+		p.fee_rule_id, p.court_uuid,
+		p.park_rule_id, p.delete_flag,
+		p.config_info,
+		p.pic_path, p.address,
+		p.longitude, p.latitude,
+		p.phone_number
+
+	</sql>
+
+	<select id="selectParkingLotAndChannel" resultMap="BaseResultMap"
+		parameterType="Object">
+		select
+		<include refid="Base_Column_ParkingLot_Channel_List" />
+		from plc.park_parking_lot p, plc.park_channel c where p.park_code =
+		c.park_code and p.delete_flag =0 
+		<if test="list != null and list.size() > 0">
+			and
+			<foreach collection="list" index="index" item="item" open="("
+				separator=" or " close=")">
+				p.uuid=#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<select id="selectChannelByParkCodesAndDevType" resultMap="ChannelRelResultMap"
+		parameterType="Object">
+		select c.park_code,r.dev_code
+		from plc.park_channel c inner join
+		plc.park_channel_rel r on
+		c.uuid = r.channel_id where r.dev_type = #{devType} and c.delete_flag =0 
+		<if test="parkCodes != null and parkCodes.size() > 0">
+			and c.park_code in
+			<foreach collection="parkCodes" index="index" item="item" open="("
+				separator=" , " close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+</mapper>

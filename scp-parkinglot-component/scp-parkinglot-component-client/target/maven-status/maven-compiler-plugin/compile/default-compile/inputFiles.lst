@@ -1,0 +1,16 @@
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/client/charge/ChargeClient.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/client/access/impl/AccessCurClientImpl.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/rule/ChargeInfoDto.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/rule/RequestFeeRuleDto.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/rule/PeakPeriodDto.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/client/charge/impl/ChargeClientImpl.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/access/AccessCurDto.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/car/CarDto.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/rule/FreeTimeDto.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/client/access/AccessCurClient.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/rule/ChargeDetailDto.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/charge/ChargeOnlineDto.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/client/rule/impl/FeeRuleClientImpl.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/rule/NonPeakPeriodDto.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/client/rule/FeeRuleClient.java
+/var/lib/jenkins/workspace/DH-ParkingLotComponent/scp-parkinglot-component/scp-parkinglot-component-client/src/main/java/com/eg/egsc/scp/parkinglotcomponent/dto/rule/FeeRuleDto.java

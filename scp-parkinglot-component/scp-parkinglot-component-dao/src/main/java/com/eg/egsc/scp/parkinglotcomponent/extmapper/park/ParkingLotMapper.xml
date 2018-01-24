@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.park.ParkingLotMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkParkingLot">
+		<id column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="park_name" property="parkName" jdbcType="VARCHAR" />
+		<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+		<result column="total" property="total" jdbcType="INTEGER" />
+		<result column="idle" property="idle" jdbcType="INTEGER" />
+		<result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+		<result column="fee_rule_id" property="feeRuleId" jdbcType="VARCHAR" />
+		<result column="park_rule_id" property="parkRuleId" jdbcType="VARCHAR" />
+		<result column="config_info" property="configInfo" jdbcType="VARCHAR" />
+		<result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="longitude" property="longitude" jdbcType="NUMERIC" />
+		<result column="latitude" property="latitude" jdbcType="NUMERIC" />
+		<result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="SMALLINT" />
+		<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="BaseResultParkParkingLotAndParkPackageParkRelMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.extmapper.park.entity.ParkingLot">
+		<id column="uuid" property="id" jdbcType="VARCHAR" />
+		<result column="park_name" property="parkName" jdbcType="VARCHAR" />
+		<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+		<result column="total" property="total" jdbcType="INTEGER" />
+		<result column="idle" property="idle" jdbcType="INTEGER" />
+		<result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+		<result column="fee_rule_id" property="feeRuleId" jdbcType="VARCHAR" />
+		<result column="park_rule_id" property="parkRuleId" jdbcType="VARCHAR" />
+		<result column="config_info" property="configInfo" jdbcType="VARCHAR" />
+		<result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="longitude" property="longitude" jdbcType="NUMERIC" />
+		<result column="latitude" property="latitude" jdbcType="NUMERIC" />
+		<result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="SMALLINT" />
+		<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+		<collection property="parkPackageParkRel"
+			javaType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageParkRel">
+			<result column="package_id" property="packageId" jdbcType="VARCHAR" />
+			<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		uuid, park_name, park_code, total, idle, parent_code,
+		fee_rule_id, delete_flag, court_uuid,
+		park_rule_id, config_info,
+		pic_path,
+		address, longitude,memo,
+		latitude, phone_number, create_user,
+		update_user,create_time,
+		update_time
+	</sql>
+
+	<sql id="Base_Column_Package_List">
+		l.uuid, park_name, l.park_code, total, idle, parent_code,
+		fee_rule_id, delete_flag, court_uuid,
+		park_rule_id, config_info,
+		pic_path, address, longitude,
+		latitude, phone_number, memo, create_user,
+		update_user,
+		create_time,
+		update_time,
+		p.package_id,p.park_code
+	</sql>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<if test="id != null">
+				and uuid = #{id}
+			</if>
+			<if test="parkCode != null">
+				and park_code = #{parkCode}
+			</if>
+			<if test="parkName != null">
+				and park_name = #{parkName}
+			</if>
+		</where>
+	</sql>
+	<update id="updateParkingLotSelfReduction" parameterType="java.lang.String">
+		update
+		plc.park_parking_lot
+		set idle = idle - 1
+		where uuid =
+		#{id,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateParkingLotSelfAdd" parameterType="java.lang.String">
+		update
+		plc.park_parking_lot
+		set idle = idle + 1
+		where uuid =
+		#{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectParkParkingLot" resultMap="BaseResultMap"
+		parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkParkingLot">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_parking_lot where park_code =
+		#{parkCode,jdbcType=VARCHAR} or park_name=#{parkName,jdbcType=VARCHAR} and delete_flag = 0
+	</select>
+
+	<select id="selectParkParkingLotByName" resultMap="BaseResultMap"
+		parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkParkingLot">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_parking_lot where park_name=#{parkName} and uuid !=
+		#{uuid} and delete_flag = 0
+	</select>
+
+	<select id="selectParkParkingLotAndParkPackageParkRel"
+		resultMap="BaseResultParkParkingLotAndParkPackageParkRelMap"
+		parameterType="Object">
+		select
+		<include refid="Base_Column_Package_List" />
+		from plc.park_parking_lot l, plc.park_package_park_rel p
+		where
+		l.park_code = p.park_code and l.delete_flag = 0
+		<if test="list != null and list.size() > 0">
+			and
+			<foreach collection="list" index="index" item="item" open="("
+				separator=" or " close=")">
+				fee_rule_id=#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<select id="selectParkParkingLotAndParkPackageParkRelByRuleIds"
+		resultMap="BaseResultParkParkingLotAndParkPackageParkRelMap"
+		parameterType="Object">
+		select
+		<include refid="Base_Column_Package_List" />
+		from plc.park_parking_lot l, plc.park_package_park_rel p
+		where
+		l.park_code = p.park_code and l.delete_flag = 0
+		<if test="list != null and list.size() > 0">
+			and
+			<foreach collection="list" index="index" item="item" open="("
+				separator=" or " close=")">
+				park_rule_id_id=#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<update id="updateByCode"
+		parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkParkedCur">
+		update plc.park_parked_cur
+		set map_id = #{mapId}
+		where
+		carport_code = #{carportCode}
+	</update>
+</mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.car.CarDevRelMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkCarDevRel">
+		<id column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="car_num" property="carNum" jdbcType="VARCHAR" />
+		<result column="dev_code" property="devCode" jdbcType="VARCHAR" />
+		<result column="dev_name" property="devName" jdbcType="VARCHAR" />
+		<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+		<result column="list_type" property="listType" jdbcType="SMALLINT" />
+		<result column="task_type" property="taskType" jdbcType="SMALLINT" />
+		<result column="opt_type" property="optType" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertPackageCarRelBatch" parameterType="java.util.List">
+		insert into plc.park_car_dev_rel
+		(uuid,car_num,dev_code,dev_name,park_code,list_type,task_type,
+		opt_type,status,court_uuid,start_time,end_time,
+		create_time,update_time,create_user,update_user)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.uuid},#{item.carNum},#{item.devCode},#{item.devName},
+			#{item.parkCode},#{item.listType},#{item.taskType},#{item.optType},
+			#{item.status},#{item.courtUuid},#{item.startTime},#{item.endTime},
+			#{item.createTime},#{item.updateTime},#{item.createUser},#{item.updateUser})
+		</foreach>
+	</insert>
+
+	<update id="updateStatusByCarNumsAndParkCodes" parameterType="Object">
+		update plc.park_car_dev_rel set
+		<if test="carDevRel.startTime != null">
+			start_time=#{carDevRel.startTime},
+		</if>
+		<if test="carDevRel.endTime != null">
+			end_time=#{carDevRel.endTime},
+		</if>
+		<if test="carDevRel.listType != null">
+			list_type=#{carDevRel.listType},
+		</if>
+		opt_type=#{carDevRel.optType},status=#{carDevRel.status}
+		<where>
+			<foreach collection="carDevList" item="item" separator=" or "
+				open="(" close=")">
+				( car_num in
+				<foreach collection="item.carNumList" item="carNum"
+					separator=" , " open="(" close=")">
+					#{carNum}
+				</foreach>
+				and park_code in
+				<foreach collection="item.parkCodeList" item="parkCode"
+					separator=" , " open="(" close=")">
+					#{parkCode}
+				</foreach>
+				)
+			</foreach>
+		</where>
+	</update>
+
+	<update id="updateStatusByDevCodes" parameterType="Object">
+		update plc.park_car_dev_rel set
+		<if test="carDevRel.startTime != null">
+			start_time=#{carDevRel.startTime},
+		</if>
+		<if test="carDevRel.endTime != null">
+			end_time=#{carDevRel.endTime},
+		</if>
+		<if test="carDevRel.listType != null">
+			list_type=#{carDevRel.listType},
+		</if>
+		opt_type=#{carDevRel.optType},status=#{carDevRel.status}
+		where dev_code
+		in
+		<foreach collection="ids" index="index" item="item" open="("
+			separator=" , " close=")">
+			#{item}
+		</foreach>
+	</update>
+
+</mapper>

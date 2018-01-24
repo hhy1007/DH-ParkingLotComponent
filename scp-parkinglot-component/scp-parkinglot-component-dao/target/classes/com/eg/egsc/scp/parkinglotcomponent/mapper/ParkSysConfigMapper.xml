@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eg.egsc.scp.parkinglotcomponent.mapper.ParkSysConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfig" >
+    <id column="config_type" property="configType" jdbcType="VARCHAR" />
+    <result column="config_name" property="configName" jdbcType="VARCHAR" />
+    <result column="config_seq" property="configSeq" jdbcType="SMALLINT" />
+    <result column="config_par1" property="configPar1" jdbcType="VARCHAR" />
+    <result column="config_par2" property="configPar2" jdbcType="VARCHAR" />
+    <result column="config_par3" property="configPar3" jdbcType="VARCHAR" />
+    <result column="enable_flag" property="enableFlag" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    config_type, config_name, config_seq, config_par1, config_par2, config_par3, enable_flag, 
+    create_time, update_time, create_user, update_user
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfigCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_sys_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from plc.park_sys_config
+    where config_type = #{configType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from plc.park_sys_config
+    where config_type = #{configType,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfigCriteria" >
+    delete from plc.park_sys_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfig" >
+    insert into plc.park_sys_config (config_type, config_name, config_seq, 
+      config_par1, config_par2, config_par3, 
+      enable_flag, create_time, update_time, 
+      create_user, update_user)
+    values (#{configType,jdbcType=VARCHAR}, #{configName,jdbcType=VARCHAR}, #{configSeq,jdbcType=SMALLINT}, 
+      #{configPar1,jdbcType=VARCHAR}, #{configPar2,jdbcType=VARCHAR}, #{configPar3,jdbcType=VARCHAR}, 
+      #{enableFlag,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfig" >
+    insert into plc.park_sys_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="configType != null" >
+        config_type,
+      </if>
+      <if test="configName != null" >
+        config_name,
+      </if>
+      <if test="configSeq != null" >
+        config_seq,
+      </if>
+      <if test="configPar1 != null" >
+        config_par1,
+      </if>
+      <if test="configPar2 != null" >
+        config_par2,
+      </if>
+      <if test="configPar3 != null" >
+        config_par3,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="configType != null" >
+        #{configType,jdbcType=VARCHAR},
+      </if>
+      <if test="configName != null" >
+        #{configName,jdbcType=VARCHAR},
+      </if>
+      <if test="configSeq != null" >
+        #{configSeq,jdbcType=SMALLINT},
+      </if>
+      <if test="configPar1 != null" >
+        #{configPar1,jdbcType=VARCHAR},
+      </if>
+      <if test="configPar2 != null" >
+        #{configPar2,jdbcType=VARCHAR},
+      </if>
+      <if test="configPar3 != null" >
+        #{configPar3,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfigCriteria" resultType="java.lang.Integer" >
+    select count(*) from plc.park_sys_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update plc.park_sys_config
+    <set >
+      <if test="record.configType != null" >
+        config_type = #{record.configType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configName != null" >
+        config_name = #{record.configName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configSeq != null" >
+        config_seq = #{record.configSeq,jdbcType=SMALLINT},
+      </if>
+      <if test="record.configPar1 != null" >
+        config_par1 = #{record.configPar1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configPar2 != null" >
+        config_par2 = #{record.configPar2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configPar3 != null" >
+        config_par3 = #{record.configPar3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enableFlag != null" >
+        enable_flag = #{record.enableFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUser != null" >
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update plc.park_sys_config
+    set config_type = #{record.configType,jdbcType=VARCHAR},
+      config_name = #{record.configName,jdbcType=VARCHAR},
+      config_seq = #{record.configSeq,jdbcType=SMALLINT},
+      config_par1 = #{record.configPar1,jdbcType=VARCHAR},
+      config_par2 = #{record.configPar2,jdbcType=VARCHAR},
+      config_par3 = #{record.configPar3,jdbcType=VARCHAR},
+      enable_flag = #{record.enableFlag,jdbcType=SMALLINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      update_user = #{record.updateUser,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfig" >
+    update plc.park_sys_config
+    <set >
+      <if test="configName != null" >
+        config_name = #{configName,jdbcType=VARCHAR},
+      </if>
+      <if test="configSeq != null" >
+        config_seq = #{configSeq,jdbcType=SMALLINT},
+      </if>
+      <if test="configPar1 != null" >
+        config_par1 = #{configPar1,jdbcType=VARCHAR},
+      </if>
+      <if test="configPar2 != null" >
+        config_par2 = #{configPar2,jdbcType=VARCHAR},
+      </if>
+      <if test="configPar3 != null" >
+        config_par3 = #{configPar3,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where config_type = #{configType,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfig" >
+    update plc.park_sys_config
+    set config_name = #{configName,jdbcType=VARCHAR},
+      config_seq = #{configSeq,jdbcType=SMALLINT},
+      config_par1 = #{configPar1,jdbcType=VARCHAR},
+      config_par2 = #{configPar2,jdbcType=VARCHAR},
+      config_par3 = #{configPar3,jdbcType=VARCHAR},
+      enable_flag = #{enableFlag,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where config_type = #{configType,jdbcType=VARCHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfigCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_sys_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

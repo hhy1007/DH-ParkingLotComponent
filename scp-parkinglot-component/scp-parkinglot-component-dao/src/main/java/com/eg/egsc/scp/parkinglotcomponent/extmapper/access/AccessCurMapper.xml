@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.access.AccessCurMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.extmapper.access.entity.AccessCur">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="car_num" property="carNum" jdbcType="VARCHAR" />
+		<result column="owner_id" property="ownerId" jdbcType="VARCHAR" />
+		<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+		<result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+		<result column="carport_type" property="carportType" jdbcType="SMALLINT" />
+		<result column="park_package_id" property="parkPackageId"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="in_camera_code" property="inCameraCode"
+			jdbcType="VARCHAR" />
+		<result column="in_channel_id" property="inChannelId" jdbcType="VARCHAR" />
+		<result column="in_img_url" property="inImgUrl" jdbcType="VARCHAR" />
+		<result column="in_num_url" property="inNumUrl" jdbcType="VARCHAR" />
+		<result column="enter_mode" property="enterMode" jdbcType="SMALLINT" />
+		<result column="need_pay" property="needPay" jdbcType="SMALLINT" />
+		<result column="payed_money" property="payedMoney" jdbcType="INTEGER" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="car_type" property="carType" jdbcType="SMALLINT" />
+		<association property="parkingLot"
+			javaType="com.eg.egsc.scp.parkinglotcomponent.extmapper.park.entity.ParkingLot">
+			<id column="uuid" property="id" jdbcType="VARCHAR" />
+			<result column="park_name" property="parkName" jdbcType="VARCHAR" />
+			<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+			<result column="total" property="total" jdbcType="INTEGER" />
+			<result column="idle" property="idle" jdbcType="INTEGER" />
+			<result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+			<result column="fee_rule_id" property="feeRuleId" jdbcType="VARCHAR" />
+			<result column="park_rule_id" property="parkRuleId" jdbcType="VARCHAR" />
+			<result column="config_info" property="configInfo" jdbcType="VARCHAR" />
+			<result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+			<result column="address" property="address" jdbcType="VARCHAR" />
+			<result column="longitude" property="longitude" jdbcType="NUMERIC" />
+			<result column="latitude" property="latitude" jdbcType="NUMERIC" />
+			<result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+			<result column="memo" property="memo" jdbcType="VARCHAR" />
+			<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+			<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+			<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+			<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+			<association property="parkFeeRule"
+				javaType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkFeeRule">
+				<id column="uuid" property="id" jdbcType="VARCHAR" />
+				<result column="rule_name" property="ruleName" jdbcType="VARCHAR" />
+				<result column="rule_type" property="ruleType" jdbcType="VARCHAR" />
+				<result column="detail" property="detail" jdbcType="VARCHAR" />
+				<result column="memo" property="memo" jdbcType="VARCHAR" />
+				<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+				<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+				<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+				<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+			</association>
+		</association>
+	</resultMap>
+	<sql id="Base_Column_List">
+		c.uuid as id, car_num, owner_id, c.park_code,
+		card_number,
+		carport_type, park_package_id,
+		c.create_time, in_camera_code,
+		in_channel_id, in_img_url, in_num_url, enter_mode,
+		need_pay,
+		payed_money, c.update_time, car_type,
+		park_name, p.park_code, total,
+		idle, parent_code, fee_rule_id, park_rule_id,
+		config_info,
+		pic_path,
+		address, longitude, latitude, phone_number,
+		rule_name, rule_type,
+		detail, r.memo,
+		r.create_time, r.update_time, r.create_user,
+		r.update_user
+	</sql>
+	<select id="selectAccessCurAndParkingLotAndParkFeeRuleByPrimaryKey"
+		resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_access_cur c, plc.park_parking_lot p, plc.park_fee_rule
+		r
+		where c.uuid = #{id,jdbcType=VARCHAR} and c.park_code=p.park_code and
+		p.fee_rule_id = r.uuid and r.delete_flag = 0
+	</select>
+	
+	<select id="countByPackageId" resultType="java.lang.Integer" parameterType="Object">
+		select count(*) from plc.park_access_cur c 
+		where c.park_package_id in 
+		<foreach collection="list" index="index" item="item" open="("
+			separator=" , " close=")">
+			#{item}
+		</foreach>
+	</select>
+</mapper>

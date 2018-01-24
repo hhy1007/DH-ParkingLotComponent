@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.config.ConfigMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfig">
+		<id column="config_type" property="configType" jdbcType="VARCHAR" />
+		<result column="config_name" property="configName" jdbcType="VARCHAR" />
+		<result column="config_seq" property="configSeq" jdbcType="SMALLINT" />
+		<result column="config_par1" property="configPar1" jdbcType="VARCHAR" />
+		<result column="config_par2" property="configPar2" jdbcType="VARCHAR" />
+		<result column="config_par3" property="configPar3" jdbcType="VARCHAR" />
+		<result column="enable_flag" property="enableFlag" jdbcType="SMALLINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		config_type, config_name, config_seq, config_par1,
+		config_par2, config_par3, enable_flag,
+		create_time, update_time,
+		create_user, update_user
+	</sql>
+	<select id="selectPageList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_sys_config
+		<if test="config_seq!=null">
+			WHERE config_seq like
+			CONCAT('%',#{config_seq,jdbcType=VARCHAR},'%')
+		</if>
+		limit #{pageSize,jdbcType=INTEGER} offset
+		#{currentPage,jdbcType=INTEGER}
+	</select>
+	<update id="updateConfigByConfigSeq"
+		parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkSysConfig">
+		update plc.park_sys_config 
+		set 
+		config_type=#{configType},
+		config_name=#{configName},
+		config_par1=#{configPar1},
+		config_par2=#{configPar2}, 
+		config_par3=#{configPar3}, 
+		enable_flag=#{enableFlag},
+		create_time=#{createTime}, 
+		update_time=#{updateTime},
+		create_user=#{createUser}, 
+		update_user=#{updateUser}
+		where 
+		config_seq = #{configSeq}
+	</update>
+</mapper>

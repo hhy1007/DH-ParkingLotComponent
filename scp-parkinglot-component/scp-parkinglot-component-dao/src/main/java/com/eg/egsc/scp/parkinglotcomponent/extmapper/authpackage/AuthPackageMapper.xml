@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.authpackage.AuthPackageMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.extmapper.authpackage.entity.AuthPackage">
+		<id column="uuid" property="id" jdbcType="VARCHAR" />
+		<result column="owner_id" property="ownerId" jdbcType="VARCHAR" />
+		<result column="carport_code" property="carportCode" jdbcType="VARCHAR" />
+		<result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+		<result column="park_rule_id" property="parkRuleId" jdbcType="VARCHAR" />
+		<result column="valid_start_time" property="validStartTime"
+			jdbcType="TIMESTAMP" />
+		<result column="valid_end_time" property="validEndTime"
+			jdbcType="TIMESTAMP" />
+		<result column="carport_type" property="carportType" jdbcType="SMALLINT" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="SMALLINT" />
+		<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<collection property="parkPackageParkRel"
+			javaType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageParkRel">
+			<result column="package_id" property="packageId" jdbcType="VARCHAR" />
+			<result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+		</collection>
+		<collection property="parkPackageCarRel"
+			javaType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageCarRel">
+			<result column="package_id" property="packageId" jdbcType="VARCHAR" />
+			<result column="car_num" property="carNum" jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t1.uuid, t1.owner_id, t1.carport_code, t1.card_number, t1.park_rule_id,
+		t1.valid_start_time, t1.valid_end_time, t1.carport_type,
+		t1.state, t1.memo, t1.delete_flag, t1.court_uuid,
+		t1.create_time, t1.update_time, t1.create_user, t1.update_user,
+		p1.package_id,p1.park_code,
+		c1.package_id,c1.car_num
+	</sql>
+
+	<select id="countByExample" parameterType="Object" resultType="java.lang.Integer">
+		select count(*) from plc.park_auth_package t
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<select resultMap="BaseResultMap" parameterType="Object"
+		id="selectByExample">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_auth_package t1
+		INNER JOIN plc.park_package_car_rel c1 ON
+		t1.uuid = c1.package_id
+		INNER JOIN plc.park_package_park_rel p1 ON t1.uuid
+		= p1.package_id
+		where t1.uuid in(select t.uuid FROM plc.park_auth_package t
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		)
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select resultMap="BaseResultMap" parameterType="Object"
+		id="selectByExampleWithRowbounds">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_auth_package t1
+		INNER JOIN plc.park_package_car_rel c1 ON
+		t1.uuid = c1.package_id
+		INNER JOIN plc.park_package_park_rel p1 ON t1.uuid
+		= p1.package_id
+		where t1.uuid in(select t.uuid FROM plc.park_auth_package t
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="pageSize != null and pageOffset != null">
+			limit ${pageSize} offset ${pageOffset}
+		</if>
+		)
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select resultMap="BaseResultMap" parameterType="Object"
+		id="selectByOwnerIdsWithoutTemp">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_auth_package t1
+		INNER JOIN plc.park_package_car_rel c1 ON
+		t1.uuid = c1.package_id
+		INNER JOIN plc.park_package_park_rel p1 ON t1.uuid
+		= p1.package_id
+		where t1.delete_flag = 0 and t1.carport_type in (1,2) and t1.owner_id in
+		<foreach collection="list" index="index" item="item" open="("
+			separator=" , " close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select resultMap="BaseResultMap" parameterType="Object" id="selectByIds">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_auth_package t1
+		INNER JOIN plc.park_package_car_rel c1 ON
+		t1.uuid = c1.package_id
+		INNER JOIN plc.park_package_park_rel p1 ON t1.uuid
+		= p1.package_id
+		where t1.delete_flag = 0 and t1.uuid in
+		<foreach collection="list" index="index" item="item" open="("
+			separator=" , " close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select resultMap="BaseResultMap" parameterType="Object" id="selectBycarportCodes">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_auth_package t1
+		INNER JOIN plc.park_package_car_rel c1 ON
+		t1.uuid = c1.package_id
+		INNER JOIN plc.park_package_park_rel p1 ON t1.uuid
+		= p1.package_id
+		where t1.delete_flag = 0 and t1.carport_code in
+		<foreach collection="list" index="index" item="item" open="("
+			separator=" , " close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select resultMap="BaseResultMap" parameterType="Object"
+		id="selectByOwnerIds">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_auth_package t1
+		INNER JOIN plc.park_package_car_rel c1 ON
+		t1.uuid = c1.package_id
+		INNER JOIN plc.park_package_park_rel p1 ON t1.uuid
+		= p1.package_id
+		where t1.delete_flag = 0 and t1.owner_id in
+		<foreach collection="list" index="index" item="item" open="("
+			separator=" , " close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<if test="id != null">
+				and t.uuid = #{id}
+			</if>
+			<if test="carNum != null and carNum != ''">
+				and t.uuid in (select c.package_id from
+				plc.park_package_car_rel c where c.car_num = #{carNum})
+			</if>
+			<if test="parkCode != null">
+				and t.uuid in (select p.package_id from
+				plc.park_package_park_rel p where p.park_code = #{parkCode})
+			</if>
+			<if test="ownerId != null">
+				and t.owner_id = #{ownerId}
+			</if>
+			<if test="carportCode != null">
+				and t.carport_code = #{carportCode}
+			</if>
+			<if test="state != null">
+				and t.state = #{state}
+			</if>
+			<if test="carportTypes != null">
+				and t.carport_type in 
+				<foreach collection="carportTypes" index="index" item="item" open="("
+					separator=" , " close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="deleteFlag != null">
+				and t.delete_flag = #{deleteFlag}
+			</if>
+			<if test="deleteFlag == null">
+				and t.delete_flag = 0
+			</if>
+			<if test="cardNumber != null and cardNumber != ''">
+				and t.card_number = #{cardNumber,jdbcType=VARCHAR}
+			</if>
+			<if test="nowDate != null">
+				and #{nowDate,jdbcType=TIMESTAMP} between t.valid_start_time and t.valid_end_time
+			</if>
+		</where>
+	</sql>
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.channel.ChannelRelMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkChannelRel">
+		<id column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+		<result column="dev_code" property="devCode" jdbcType="VARCHAR" />
+		<result column="dev_type" property="devType" jdbcType="SMALLINT" />
+		<result column="control_type" property="controlType" jdbcType="SMALLINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<delete id="deleteByChannelRelId" parameterType="String">
+		delete from
+		plc.park_channel_rel
+		where channel_id = #{channelId}
+	</delete>
+
+	<sql id="Base_Column_List">
+		uuid, channel_id, dev_code, dev_type, control_type,
+		create_time, court_uuid,
+		update_time, create_user,
+		update_user
+	</sql>
+
+	<select id="selectChannelRelByIds" resultMap="BaseResultMap"
+		parameterType="Object">
+		select
+		<include refid="Base_Column_List"></include>
+		from plc.park_channel_rel
+		<where>
+			<if test="list != null and list.size()>0">
+				<foreach collection="list" index="index" item="item" open="("
+					separator=" or " close=")">
+					channel_id=#{item}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap"
+		parameterType="Object">
+		select
+		<include refid="Base_Column_List"></include>
+		from plc.park_channel_rel
+		<where>
+			<if test="list != null and list.size()>0">
+				<foreach collection="list" index="index" item="item" open="("
+					separator=" or " close=")">
+					uuid=#{item}
+				</foreach>
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,6 @@
+projectKey=scp-parkinglot-component
+serverUrl=http://192.168.0.120:9009
+serverVersion=6.7.0.33306
+dashboardUrl=http://192.168.0.120:9009/dashboard/index/scp-parkinglot-component
+ceTaskId=AWEibjsgHcJlaGpySQKr
+ceTaskUrl=http://192.168.0.120:9009/api/ce/task?id=AWEibjsgHcJlaGpySQKr

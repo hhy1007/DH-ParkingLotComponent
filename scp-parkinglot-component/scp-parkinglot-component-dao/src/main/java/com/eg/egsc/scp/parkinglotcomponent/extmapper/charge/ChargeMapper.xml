@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.charge.ChargeMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.extmapper.charge.entity.Charge">
+		<id column="uuid" property="id" jdbcType="VARCHAR" />
+		<result column="owner_id" property="ownerId" jdbcType="VARCHAR" />
+		<result column="carport_code" property="carportCode" jdbcType="VARCHAR" />
+		<result column="carport_type" property="carportType" jdbcType="SMALLINT" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="money" property="money" jdbcType="INTEGER" />
+		<collection property="parkPackageCarRel"
+			javaType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageCarRel">
+			<result column="package_id" property="packageId" jdbcType="VARCHAR" />
+			<result column="car_num" property="carNum" jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.uuid,t.owner_id,t.carport_code,t.memo,t.create_time,t.money,
+		p.carport_type,c.car_num
+	</sql>
+
+	<select id="countByExample" parameterType="Object" resultType="java.lang.Integer">
+		select count(*) from plc.park_charge t
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<select resultMap="BaseResultMap" parameterType="Object"
+		id="selectByExample">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_charge t
+		INNER JOIN plc.park_auth_package p on t.package_id = p.uuid
+		INNER JOIN plc.park_package_car_rel c on t.package_id = c.package_id
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select resultMap="BaseResultMap" parameterType="Object"
+		id="selectByExampleWithRowbounds">
+		select
+		<include refid="Base_Column_List" />
+		from plc.park_charge t
+		INNER JOIN plc.park_auth_package p on t.package_id = p.uuid
+		INNER JOIN plc.park_package_car_rel c on t.package_id = c.package_id
+		where t.uuid in(select t.uuid FROM plc.park_charge t
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="pageSize != null and pageOffset != null">
+			limit ${pageSize} offset ${pageOffset}
+		</if>
+		)
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<sql id="Example_Where_Clause">
+		<where>
+			<if test="carNum != null and carNum != ''">
+				and t.package_id in (select car.package_id from
+				plc.park_package_car_rel car where car.car_num = #{carNum})
+			</if>
+			<if test="parkCode != null">
+				and t.package_id in (select park.package_id from
+				plc.park_package_park_rel park where park.park_code = #{parkCode})
+			</if>
+			<if test="packageId != null">
+				and t.package_id = #{packageId}
+			</if>
+		</where>
+	</sql>
+</mapper>

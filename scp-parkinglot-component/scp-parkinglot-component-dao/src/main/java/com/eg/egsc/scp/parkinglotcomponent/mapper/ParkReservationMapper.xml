@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eg.egsc.scp.parkinglotcomponent.mapper.ParkReservationMapper" >
+  <resultMap id="BaseResultMap" type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkReservation" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="car_num" property="carNum" jdbcType="VARCHAR" />
+    <result column="park_code" property="parkCode" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="consumer_name" property="consumerName" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="enter_model" property="enterModel" jdbcType="SMALLINT" />
+    <result column="exit_model" property="exitModel" jdbcType="SMALLINT" />
+    <result column="access_id" property="accessId" jdbcType="VARCHAR" />
+    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="SMALLINT" />
+    <result column="court_uuid" property="courtUuid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, car_num, park_code, start_time, end_time, serial_number, consumer_name, phone_number, 
+    enter_model, exit_model, access_id, notify_url, memo, delete_flag, court_uuid, create_time, 
+    update_time, create_user, update_user
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkReservationCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_reservation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from plc.park_reservation
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from plc.park_reservation
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkReservationCriteria" >
+    delete from plc.park_reservation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkReservation" >
+    insert into plc.park_reservation (uuid, car_num, park_code, 
+      start_time, end_time, serial_number, 
+      consumer_name, phone_number, enter_model, 
+      exit_model, access_id, notify_url, 
+      memo, delete_flag, court_uuid, 
+      create_time, update_time, create_user, 
+      update_user)
+    values (#{uuid,jdbcType=VARCHAR}, #{carNum,jdbcType=VARCHAR}, #{parkCode,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{serialNumber,jdbcType=VARCHAR}, 
+      #{consumerName,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{enterModel,jdbcType=SMALLINT}, 
+      #{exitModel,jdbcType=SMALLINT}, #{accessId,jdbcType=VARCHAR}, #{notifyUrl,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=SMALLINT}, #{courtUuid,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, 
+      #{updateUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkReservation" >
+    insert into plc.park_reservation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="carNum != null" >
+        car_num,
+      </if>
+      <if test="parkCode != null" >
+        park_code,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="consumerName != null" >
+        consumer_name,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="enterModel != null" >
+        enter_model,
+      </if>
+      <if test="exitModel != null" >
+        exit_model,
+      </if>
+      <if test="accessId != null" >
+        access_id,
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="courtUuid != null" >
+        court_uuid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="carNum != null" >
+        #{carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="parkCode != null" >
+        #{parkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="consumerName != null" >
+        #{consumerName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="enterModel != null" >
+        #{enterModel,jdbcType=SMALLINT},
+      </if>
+      <if test="exitModel != null" >
+        #{exitModel,jdbcType=SMALLINT},
+      </if>
+      <if test="accessId != null" >
+        #{accessId,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="courtUuid != null" >
+        #{courtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkReservationCriteria" resultType="java.lang.Integer" >
+    select count(*) from plc.park_reservation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update plc.park_reservation
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNum != null" >
+        car_num = #{record.carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkCode != null" >
+        park_code = #{record.parkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.serialNumber != null" >
+        serial_number = #{record.serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumerName != null" >
+        consumer_name = #{record.consumerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null" >
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterModel != null" >
+        enter_model = #{record.enterModel,jdbcType=SMALLINT},
+      </if>
+      <if test="record.exitModel != null" >
+        exit_model = #{record.exitModel,jdbcType=SMALLINT},
+      </if>
+      <if test="record.accessId != null" >
+        access_id = #{record.accessId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notifyUrl != null" >
+        notify_url = #{record.notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memo != null" >
+        memo = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="record.courtUuid != null" >
+        court_uuid = #{record.courtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUser != null" >
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update plc.park_reservation
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      car_num = #{record.carNum,jdbcType=VARCHAR},
+      park_code = #{record.parkCode,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      serial_number = #{record.serialNumber,jdbcType=VARCHAR},
+      consumer_name = #{record.consumerName,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      enter_model = #{record.enterModel,jdbcType=SMALLINT},
+      exit_model = #{record.exitModel,jdbcType=SMALLINT},
+      access_id = #{record.accessId,jdbcType=VARCHAR},
+      notify_url = #{record.notifyUrl,jdbcType=VARCHAR},
+      memo = #{record.memo,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=SMALLINT},
+      court_uuid = #{record.courtUuid,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      update_user = #{record.updateUser,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkReservation" >
+    update plc.park_reservation
+    <set >
+      <if test="carNum != null" >
+        car_num = #{carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="parkCode != null" >
+        park_code = #{parkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="consumerName != null" >
+        consumer_name = #{consumerName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="enterModel != null" >
+        enter_model = #{enterModel,jdbcType=SMALLINT},
+      </if>
+      <if test="exitModel != null" >
+        exit_model = #{exitModel,jdbcType=SMALLINT},
+      </if>
+      <if test="accessId != null" >
+        access_id = #{accessId,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="courtUuid != null" >
+        court_uuid = #{courtUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkReservation" >
+    update plc.park_reservation
+    set car_num = #{carNum,jdbcType=VARCHAR},
+      park_code = #{parkCode,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      serial_number = #{serialNumber,jdbcType=VARCHAR},
+      consumer_name = #{consumerName,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      enter_model = #{enterModel,jdbcType=SMALLINT},
+      exit_model = #{exitModel,jdbcType=SMALLINT},
+      access_id = #{accessId,jdbcType=VARCHAR},
+      notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=SMALLINT},
+      court_uuid = #{courtUuid,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkReservationCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from plc.park_reservation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

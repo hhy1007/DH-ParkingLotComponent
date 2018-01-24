@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.eg.egsc.scp.parkinglotcomponent.extmapper.authpackage.PackageCarRelMapper">
+	<resultMap id="BaseResultMap"
+		type="com.eg.egsc.scp.parkinglotcomponent.mapper.entity.ParkPackageCarRel">
+		<result column="package_id" property="packageId" jdbcType="VARCHAR" />
+		<result column="car_num" property="carNum" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertPackageCarRelBatch" parameterType="java.util.List">
+		insert into plc.park_package_car_rel (package_id,car_num)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.packageId},#{item.carNum})
+		</foreach>
+	</insert>
+
+</mapper>
